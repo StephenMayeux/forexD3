@@ -1,11 +1,11 @@
-import { FETCH_DATA, FETCH_TIME_DATA, SAVE_TIME_DATA } from '../actions/types';
-import fakeData from '../data/fakeData';
-// return false if user is not logged in
-// if not declared 'false', action.payload return is an empty string ''
-// in header.js, the action.payload returned through authreducer decides rendering
+import {
+	FETCH_DATA,
+	FETCH_TIME_DATA,
+	SAVE_TIME_DATA
+} from '../actions/types';
 
 const INITIAL_STATE = {
-	currency: fakeData,
+	currency: [],
 	currencyTime: []
 }
 
