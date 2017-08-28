@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Select from 'react-select';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
@@ -9,14 +8,18 @@ import DateChart from './dateChart';
 
 class App extends Component {
 
+	componentWillMount() {
+		this.props.actions.fetchData()
+	}
+
 	render() {
+		if (!this.props.currency) return <div>Loading...</div>
 		return(
 			<div className="container-fluid">
 				<Header />
 		    <DateChart
 					actions={this.props.actions}
 					currency={this.props.currency}
-					base={'USD'}
 				/>
 			</div>
 		);

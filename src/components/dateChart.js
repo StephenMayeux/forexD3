@@ -1,55 +1,47 @@
 import React, { Component } from 'react';
-import Moment from 'react-moment';
-import 'moment-timezone';
-import moment from 'moment'
-import _ from 'lodash';
-import axios from 'axios';
+import {
+  LineChart,
+  XAxis,
+  YAxis,
+  Legend,
+  Line,
+  Tooltip
+} from 'recharts'
+import _ from 'lodash'
 
-import { enumerateDays, calculateBetween } from './helpers/helperFunctions';
-import getTimeData from './helpers/getFunctions';
-
-var Chart = require('react-d3-core').Chart;
-var LineChart = require('react-d3-basic').LineChart;
+const colors = [
+  '#82ca9d',
+  '#C0392B',
+  '#2980B9',
+  '#27AE60',
+  '#E67E22'
+]
 
 export default class DateChart extends Component {
 
-  componentWillMount() {
-
+  renderChartLines() {
+    const symbols = ['AUD', 'CAD', 'GBP', 'EUR']
+    return symbols.map(symbol => {
+      return (
+        <Line
+          key={symbol}
+          type="monotone"
+          dataKey={symbol}
+          stroke={_.sample(colors)}
+        />
+      )
+    })
   }
 
   render() {
-
-    const margins = {
-      top: 50,
-      right: 20,
-      bottom: 100,
-      left: 60
-    }
-
-    const svgDimensions = {
-      width: 1400,
-      height: 800
-    }
-
-		const chartSeries = [{
-			field: 'age',
-			name: 'USD',
-			color: '#ff7f0e',
-			style: {
-				"stroke-width": 2,
-				"stroke-opacity": .2,
-				"fill-opacity": .2
-			}
-		}]
-
-		return (
-			<LineChart
-				margins={margins}
-				width={svgDimensions.width}
-				height={svgDimensions.height}
-				data={data}
-				chartSeries={chartSeries}
-			/>
-		)
-	}
+    return (
+      <LineChart width={730} height={250} data={this.props.currency}>
+        <XAxis dataKey="date" />
+        <YAxis type="number" />
+        <Legend />
+        <Tooltip />
+        {this.renderChartLines()}
+      </LineChart>
+    )
+  }
 }
